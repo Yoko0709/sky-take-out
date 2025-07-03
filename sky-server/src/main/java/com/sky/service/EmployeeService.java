@@ -29,4 +29,19 @@ public interface EmployeeService {
      */
 
     PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO);
+
+    void statOrStop(Integer status, Long id);
+
+    /**
+     * search user by ID
+     * @param id
+     * @return
+     */
+    Employee getById(Long id);
+
+    /**
+     * update employee infor
+     * @param employeeDTO
+     */
+    void update(EmployeeDTO employeeDTO);
 }

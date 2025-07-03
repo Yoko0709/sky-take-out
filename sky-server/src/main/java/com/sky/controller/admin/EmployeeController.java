@@ -97,4 +97,33 @@ public class EmployeeController {
         PageResult pageresult = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(pageresult);
     }
+
+    /**
+     * Enable or disable staff accounts
+     * @param status
+     * @param id
+     * @return
+     */
+
+    @PostMapping("/status/{status}")
+    @ApiOperation("Enable or disable staff accounts")
+    public Result startOrStop(@PathVariable Integer status, Long id){
+        log.info("Employee Status:{}, {}",status, id);
+        employeeService.statOrStop(status, id);
+        return Result.success();
+    }
+    @GetMapping("/{id}")
+    @ApiOperation("Search by id")
+    public Result<Employee> getById(@PathVariable Long id){
+        log.info("Employee getById:{}",id);
+        Employee employee = employeeService.getById(id);
+        return Result.success(employee);
+    }
+    @PutMapping
+    @ApiOperation("employee infor update")
+    public Result update(@RequestBody EmployeeDTO  employeeDTO){
+        log.info("Employee update:{}",employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success();
+    }
 }

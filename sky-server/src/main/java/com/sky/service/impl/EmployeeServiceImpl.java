@@ -105,4 +105,45 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> Records = page.getResult();
         return new PageResult(total,  Records);
     }
+
+    /**
+     * Enable or disable staff accounts
+     * @param status
+     * @param id
+     */
+    public void statOrStop(Integer status, Long id) {
+        //update employee set status = ? where id = ?
+        Employee employee = Employee.builder()
+                .status(status)
+                .id(id)
+                .build();
+//        Employee employee = new Employee();
+//        employee.setStatus(status);
+//        employee.setId(id);
+        employeeMapper.update(employee);
+
+    }
+
+    /**
+     * search user by ID
+     * @param id
+     * @return
+     */
+    public Employee getById(Long id) {
+        Employee employee = employeeMapper.getById(id);
+        employee.setPassword("****");
+        return employee;
+    }
+
+    /**
+     * update employee infor
+     * @param employeeDTO
+     */
+    public void update(EmployeeDTO employeeDTO) {
+        Employee employee = new Employee();
+        BeanUtils.copyProperties(employeeDTO, employee);
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+        employeeMapper.update(employee);
+    }
 }
